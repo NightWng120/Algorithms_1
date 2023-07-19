@@ -186,5 +186,4 @@ assume the numbers are distinct
 
 ![MergeSort](/home/nightwng120/Documents/programming/algorithms/mergesort.png)
 
-
-
+ 
