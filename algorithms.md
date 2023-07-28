@@ -186,4 +186,132 @@ assume the numbers are distinct
 
 ![MergeSort](/home/nightwng120/Documents/programming/algorithms/mergesort.png)
 
- 
+## 1.6: Merge Sort Pseudocode
+
+***Pseudo Code***  
+
+*Variables*  
+- C = output array, length n
+- A = 1st sorted array, length n/2
+- B = 2st sorted array, length n/2
+
+```
+C = output [length = n]
+A = 1st sorted array [n/2]
+B = 2nd sorted array [n/2]
+
+i = 1  <|
+	    |- 2 operations
+j = 1  <|
+
+for k = 1 to n      <|
+	if A(i) < B(j)   |
+		C(k) = A(i)  |- 4 operations per cycle
+		i++         <|
+	else B(j) < A(i)
+		C(k) = B(j)
+		j++
+end
+```
+
+***In Python***
+
+
+```python
+def mergeSort(array):
+    if len(array) < 2:
+        # print(f'Base case return: {array}')
+        return array
+
+    A = mergeSort(array[:int(len(array)/2)])
+    B = mergeSort(array[int(len(array)/2):])
+    i = 0;
+    j = 0;
+
+    # print(f'Current array: {array}')
+    # print(f'A array: {A}')
+    # print(f'B array: {B}')
+    for k in range(len(array)):
+        if not A:
+            array[k] = B[j]
+            if j + 1 == len(B):
+                B = []
+            else:
+                j += 1
+
+
+        elif not B:
+            array[k] = A[i]
+            if i + 1 == len(A):
+                A = []
+            else:
+                i += 1
+
+        elif A and A[i] < B[j]:
+            array[k] = A[i]
+            if i + 1 == len(A):
+                A = []
+            else:
+                i += 1
+
+        elif B and B[j] < A[i]:
+            array[k] = B[j]
+            if j + 1 == len(B):
+                B = []
+            else:
+                j += 1
+
+        elif B[j] == A[i]:
+            array[k] = B[j]
+            if j + 1 == len(B):
+                B = []
+            else:
+                j += 1
+
+    # print(f'No early return for array {array}')
+    return array
+```
+### Merge Sort Running Time?
+
+**Key Question**: What is the running time of MergeSort  
+on array of n numbers?
+
+*[Running time ≈ # of lines of code executed]*  
+
+**Upshot**: Running time of merge on array of n numbers  
+is <= 4n + 2 or <= 6m (since m >= 1)  
+
+### Running Time of Merge Sort
+
+**Claim**: Merge Sort requires $\leq 6n\;log_2\; n + 6n$  
+operations to sort n numbers  
+
+***Recall***
+
+![log2](log2.png)  
+
+## 1.7: Merge Sort Analysis
+
+**Claim**: For every input array of $n$ numbers,  
+Merge Sort produces a sorted output array and  
+uses at most $6n\;log_2\; n + 6n$ operations  
+
+### Proof fo claim  (assuming n = power of 2):  
+
+At each level $j = 0, 1, 2, ..., log_2\;,$ there are $2^j$  
+subproblems, each of size $\frac{n}{2^j}$  
+
+**Total # of operations at level $j$:**  
+
+[each $j = 0, 1, 2, ..., log_2\;n$]
+
+\# of subproblems = $2^j$  
+Subproblems size at level $j$ = $6\frac{n}{2^j}$
+
+$\leq 2^j\;6\frac{n}{2^j} = 6n$ (Independent of $j$ !)  
+
+Work per level = $6n$  
+\# of levels = $log_2\;n + 1$
+
+**Total**: $\leq 6n\;log_2\;n + 1$
+
