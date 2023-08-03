@@ -4,18 +4,15 @@
 int * copy(int * input, int length){
 	int * copy = (int*)malloc(length * sizeof(int));
 	int * start = copy;
-	int * startI = input;
-	int * startC = copy;
 
-	while(length > 0){
+	while(length - 1 > 0){
 		printf("Input is %d, so we cool\n", *input);
 		*copy = *input;
 		copy++, input++, length--;
 	}
 
-	input = startI;
 
-	return startC;
+	return start;
 }
 
 int main(){

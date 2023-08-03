@@ -2,13 +2,17 @@
 #include <math.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 int * copy(int * input, int length){
 	int * copy = (int*)malloc(length * sizeof(int));
 	int * start = copy;
 
 
-	while(length > 0){
+	*copy = *input;
+	copy++, input++;
+
+	while(length > 1){
 		//printf("Length: %d", length);
 		*copy = *input;
 		copy++, input++, length--;
@@ -17,7 +21,7 @@ int * copy(int * input, int length){
 	return start;
 }
 
-int * mergeSort(int * array, int n){
+int * mergeSort(int * array, int n, double * inversions){
 	int * temp = array;
 	int * A;
 	int * B;
@@ -36,48 +40,19 @@ int * mergeSort(int * array, int n){
 		//printf("\n\n-----------------------\nFirst element of current array: %d\nLength: %d\n-----------------------\n\n", *array, n);
 		lenA = (n - 1)/2;
 		lenB = (n - 1)/2 + 1;
-		A = mergeSort(copy(array, lenA), lenA);
-		B = mergeSort(copy(array + lenA, lenB), n);
+		A = mergeSort(copy(array, lenA), lenA, inversions);
+		B = mergeSort(copy(array + lenA, lenB), lenB, inversions);
 	}
 
 	else{
 		//printf("\n\n-----------------------\nFirst element of current array: %d\nLength: %d\n-----------------------\n\n", *array, n);
 		lenA = n/2;
-		A = mergeSort(copy(array, lenA), lenA);
-		B = mergeSort(copy(array, lenA), n);
+		lenB = n/2;
+		A = mergeSort(copy(array, lenA), lenA, inversions);
+		B = mergeSort(copy(array + lenB, lenB), lenB, inversions);
 	}
-	//else if(n%2 == 1){
-	//	lenB = (n - 1)/2;
-    //    lenA = (n - 1)/2;
-	//	A = mergeSort(temp, lenA);
-	//	for(int k = 0; k < lenA; k++){
-	//		temp++;
-
-	//	}
-
-	//	B = mergeSort(temp, n);
-	//	int i = 0;
-	//	int j = 0;
-	//}
-
-	//else{
-	//	lenB = n/2;
-	//	lenA = n/2;
-	//	printf("\nLength of A: %d\n", lenA);
-	//	A = mergeSort(temp, lenA);
-	//	for(int k = 0; k < lenA; k++){
-	//		printf("\nCurrent temp: %d\n", *temp);
-	//		temp++;
-
-	//	}
-
-	//	B = mergeSort(temp, n);
-	//	int i = 0;
-	//	int j = 0;
-	//}
 
 	for(int k = 0; k < n; k++){
-		printf("\nCurrent array element: %d\n", *temp);
 		if(A == NULL){
 
 			*temp = *B;
@@ -88,18 +63,19 @@ int * mergeSort(int * array, int n){
 		else if(B == NULL){
 
 			*temp = *A;
-			if(j + 1 == lenA) A = NULL;
+			if(i + 1 == lenA) A = NULL;
 			else i++, A++;
 		}
 
 		else if(A != NULL && *A < *B){
 			*temp = *A;
-			if(j + 1 == lenA) A = NULL;
+			if(i + 1 == lenA) A = NULL;
 			else i++, A++;
 
 		}
 
 		else if(B != NULL && *B < *A){
+			*inversions += lenA - i;
 			*temp = *B;
 			if(j + 1 == lenB) B = NULL;
 			else j++, B++;
@@ -120,24 +96,34 @@ int * mergeSort(int * array, int n){
 int main(){
 	FILE * fp;
 	char buff[255];
-	//int array[100000];
-	int array[] = {8,4,3,2,1};
+	int array[100000];
 	int length = sizeof(array)/sizeof(int);
 	int i = 0;
+	double * inversions = (double*)malloc(sizeof(double));
+	*inversions = 0;
 
-	//fp = fopen("IntegerArray.txt", "r");
-	//while(fscanf(fp, "%s", buff) == 1){
-	//	//printf("%s\n", buff);
-	//	int value = atoi(buff);
-	//	array[i] = value;
-	//	i++;
+	clock_t start, end;
+	double cpu_time_used;
 
-	//}
-	//fclose(fp);
-	int * result = mergeSort(array, length);
+	fp = fopen("IntegerArray.txt", "r");
+	while(fscanf(fp, "%s", buff) == 1){
+		int value = atoi(buff);
+		//printf("%d\n", value);
+		array[i] = value;
+		i++;
 
-	for(i = 0; i < length; i++){
-		printf("%d\n", result[i]);
 	}
+	fclose(fp);
+	start = clock();
+	int * result = mergeSort(array, length, inversions);
+	end = clock();
+	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+	printf("Merge Sort completed in %f seconds with %.f inversions\n", cpu_time_used, *inversions);
+
+	//printf("\n");
+	//for(i = 0; i < length; i++){
+	//	printf("%d, ", result[i]);
+	//}
+	//printf("\n");
 
 }
