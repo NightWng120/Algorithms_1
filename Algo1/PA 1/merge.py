@@ -18,6 +18,7 @@ def mergeSort(array):
     # countInversions(array, len(array))
     A = mergeSort(array[:int(len(array)/2)])
     B = mergeSort(array[int(len(array)/2):])
+    length = len(A)
     i = 0;
     j = 0;
 
@@ -27,8 +28,6 @@ def mergeSort(array):
     for k in range(len(array)):
         if not A:
 
-            if array[k] > B[j]:
-                inversions += 1
             array[k] = B[j]
             if j + 1 == len(B):
                 B = []
@@ -37,8 +36,6 @@ def mergeSort(array):
 
         elif not B:
 
-            if array[k] > A[i]:
-                inversions += 1
             array[k] = A[i]
             if i + 1 == len(A):
                 A = []
@@ -47,8 +44,6 @@ def mergeSort(array):
 
         elif A and A[i] < B[j]:
 
-            if array[k] > A[i]:
-                inversions += 1
             array[k] = A[i]
             if i + 1 == len(A):
                 A = []
@@ -56,8 +51,11 @@ def mergeSort(array):
                 i += 1
 
         elif B and B[j] < A[i]:
+            # print(f'Array A: {A[i:]}|{A}\nArray B: {B[j:]}|{B}')
+            # with open('result.txt', 'a') as f:
+            #     f.write(f'\nArray A: {A[i:]}|{A}\nArray B: {B[j:]}|{B}\n')
 
-            inversions += 1
+            inversions += length - i
             array[k] = B[j]
             if j + 1 == len(B):
                 B = []
@@ -72,7 +70,7 @@ def mergeSort(array):
             else:
                 j += 1
 
-    # print(f'No early return for array {array}')
+
     return array
 
 def bubbleSort(array):
@@ -88,14 +86,13 @@ def bubbleSort(array):
     return array
 
 
-with open('Output.txt', 'r') as f:
+with open('IntegerArray.txt', 'r') as f:
     nums = [int(item.replace('\n', '')) for item in f.readlines()]
 
-
-
-
-nums.reverse()
+with open('result.txt', 'w') as f:
+    f.write('')
 start = time.time();
+# nums.reverse()
 nums = mergeSort(nums)
 # with open('Output.txt', 'w') as f:
 #     for num in nums:

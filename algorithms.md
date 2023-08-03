@@ -315,3 +315,44 @@ Work per level = $6n$
 
 **Total**: $\leq 6n\;log_2\;n + 1$
 
+## 1.8: Guiding Principles for Analysis of Algorithms
+
+### Guiding Principle #1
+
+- *Worst-case analysis*: Our running time bounds holds for *every* input  
+of length n. This is very useful for general purpose programs  
+  
+- This is used instead of *average-case* analysis and benchmarks, which both  
+require domain knowledge. Worst case is also the easiets to analyze, since it  
+is less nuanced in where most of it's complexity lies  
+
+### Guiding Principle #2
+
+We won't pay much attention to constants and lower order terms  
+
+***Justifications for this principle***  
+1. It is much simpler
+2. Constants vary widely on different things,
+(architecture, compiler, programmer), anyways
+3. We lose very little with predictive power
+
+### Guiding Principle #3
+
+*Asymptotic analysis*: Focus on optimizing program for  
+very large input sizes, n  
+
+***E.g.***  
+Merge sort, ($6n\;log_2n + 6n$), is better than insertion sort, ($\frac{n^2}{2}$)
+
+**Justification**: Only big problems are interesting!  
+
+### What Is a *Fast* Algorithm?
+
+A fast algorithm has a worst-case running time that grows slowly  
+with larger and large input sizes  
+
+Linear time is the the best possible sorting algorithm for any given  
+problem  
+
+
+

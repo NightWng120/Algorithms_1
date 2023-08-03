@@ -39,7 +39,7 @@ long long splitInv(long *arr, long l, long u)
      for(; k<=u-l+1 && i<=(u-l)/2+l; k++) tarr[k]=arr[i++];
      for(; k<=u-l+1 && j<=u; k++) tarr[k]=arr[j++];
      for(k=1, i=l ; k<=u-l+1 && i<=u; k++, i++) arr[i]=tarr[k];
-     delete tarr;
+     delete[] tarr;
      return count;
 }
 
@@ -61,7 +61,7 @@ int main(int argc, char *argv[])
     }
     fclose(f);
     cout<<"Number of Inversions: "<<numInv(arr,1,SIZE)<<endl;
-    delete arr;
+    delete[] arr;
     system("PAUSE");
     return EXIT_SUCCESS;
 }

@@ -54,17 +54,17 @@ def mergeSort(array):
     # print(f'No early return for array {array}')
     return array
 
-def bubbleSort(array):
+def bubbleSort(meme):
     temp = 0
-    i = len(array)
+    i = len(meme)
     while i:
-        for j in range(len(array) - 1):
-            if array[j] > array[j + 1]:
-                temp = array[j]
-                array[j] = array[j + 1]
-                array[j + 1] = temp
+        for j in range(len(meme) - 1):
+            if meme[j] > meme[j + 1]:
+                temp = meme[j]
+                meme[j] = meme[j + 1]
+                meme[j + 1] = temp
         i -= 1
-    return array
+    return meme
 
 
 with open('data.txt', 'r') as f:
@@ -73,7 +73,9 @@ with open('data.txt', 'r') as f:
 
 
 start = time.time();
-print(mergeSort(nums))
+nums = mergeSort(nums)
+
+print(nums)
 print(type(nums[0]))
 print(f'Merge sort executed in {time.time() - start} seconds')
 
