@@ -91,6 +91,8 @@ int * mergeSort(int * array, int n, double * inversions){
 		temp++;
 	}
 
+	free(A);
+	free(B);
 	return array;
 }
 int main(){
@@ -116,6 +118,7 @@ int main(){
 	fclose(fp);
 	start = clock();
 	int * result = mergeSort(array, length, inversions);
+	free(inversions);
 	end = clock();
 	cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 	printf("Merge Sort completed in %f seconds with %.f inversions\n", cpu_time_used, *inversions);

@@ -214,62 +214,78 @@ for k = 1 to n      <|
 end
 ```
 
-***In Python***
+***In C***
 
 
-```python
-def mergeSort(array):
-    if len(array) < 2:
-        # print(f'Base case return: {array}')
-        return array
+```c
+int * mergeSort(int * array, int n, double * inversions){
+	int * temp = array;
+	int * A;
+	int * B;
+	int lenB = 0;
+	int lenA = 0;
+	int i = 0;
+	int j = 0;
 
-    A = mergeSort(array[:int(len(array)/2)])
-    B = mergeSort(array[int(len(array)/2):])
-    i = 0;
-    j = 0;
+	if(n < 2){
+		return array;
+	}
 
-    # print(f'Current array: {array}')
-    # print(f'A array: {A}')
-    # print(f'B array: {B}')
-    for k in range(len(array)):
-        if not A:
-            array[k] = B[j]
-            if j + 1 == len(B):
-                B = []
-            else:
-                j += 1
+	else if(n%2 == 1){
+		lenA = (n - 1)/2;
+		lenB = (n - 1)/2 + 1;
+		A = mergeSort(copy(array, lenA), lenA, inversions);
+		B = mergeSort(copy(array + lenA, lenB), lenB, inversions);
+	}
 
+	else{
+		lenA = n/2;
+		lenB = n/2;
+		A = mergeSort(copy(array, lenA), lenA, inversions);
+		B = mergeSort(copy(array + lenB, lenB), lenB, inversions);
+	}
 
-        elif not B:
-            array[k] = A[i]
-            if i + 1 == len(A):
-                A = []
-            else:
-                i += 1
+	for(int k = 0; k < n; k++){
+		if(A == NULL){
 
-        elif A and A[i] < B[j]:
-            array[k] = A[i]
-            if i + 1 == len(A):
-                A = []
-            else:
-                i += 1
+			*temp = *B;
+			if(j + 1 == lenB) B = NULL;
+			else j++, B++;
+		}
 
-        elif B and B[j] < A[i]:
-            array[k] = B[j]
-            if j + 1 == len(B):
-                B = []
-            else:
-                j += 1
+		else if(B == NULL){
 
-        elif B[j] == A[i]:
-            array[k] = B[j]
-            if j + 1 == len(B):
-                B = []
-            else:
-                j += 1
+			*temp = *A;
+			if(i + 1 == lenA) A = NULL;
+			else i++, A++;
+		}
 
-    # print(f'No early return for array {array}')
-    return array
+		else if(A != NULL && *A < *B){
+			*temp = *A;
+			if(i + 1 == lenA) A = NULL;
+			else i++, A++;
+
+		}
+
+		else if(B != NULL && *B < *A){
+			*inversions += lenA - i;
+			*temp = *B;
+			if(j + 1 == lenB) B = NULL;
+			else j++, B++;
+
+		}
+
+		else if(*B == *A){
+			*temp = *B;
+			if(j + 1 == lenB) B = NULL;
+			else j++, B++;
+		}
+
+		temp++;
+	}
+
+	return array;
+}
 ```
 ### Merge Sort Running Time?
 
