@@ -25,6 +25,8 @@ int * mergeSort(int * array, int n, double * inversions){
 	int * temp = array;
 	int * A;
 	int * B;
+	int * startA;
+	int * startB;
 	int lenB = 0;
 	int lenA = 0;
 	int i = 0;
@@ -41,7 +43,9 @@ int * mergeSort(int * array, int n, double * inversions){
 		lenA = (n - 1)/2;
 		lenB = (n - 1)/2 + 1;
 		A = mergeSort(copy(array, lenA), lenA, inversions);
+		startA = A;
 		B = mergeSort(copy(array + lenA, lenB), lenB, inversions);
+		startB = B;
 	}
 
 	else{
@@ -49,7 +53,9 @@ int * mergeSort(int * array, int n, double * inversions){
 		lenA = n/2;
 		lenB = n/2;
 		A = mergeSort(copy(array, lenA), lenA, inversions);
+		startA = A;
 		B = mergeSort(copy(array + lenB, lenB), lenB, inversions);
+		startB = B;
 	}
 
 	for(int k = 0; k < n; k++){
@@ -91,8 +97,8 @@ int * mergeSort(int * array, int n, double * inversions){
 		temp++;
 	}
 
-	free(A);
-	free(B);
+	free(startA);
+	free(startB);
 	return array;
 }
 int main(){

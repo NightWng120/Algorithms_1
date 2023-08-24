@@ -1,7 +1,6 @@
 # Standford Algorithms 1 Course
 
-## 1.1: Why Study Algorithms
-
+## 1.1: Why Study Algorithms <a href="whystudyalgorithms"></a>
 A video briefly explaining the purpose of the course
 
 ## 1.2: Integer Multiplication
@@ -357,7 +356,7 @@ We won't pay much attention to constants and lower order terms
 *Asymptotic analysis*: Focus on optimizing program for  
 very large input sizes, n  
 
-***E.g.***  
+***e.g.***  
 Merge sort, ($6n\;log_2n + 6n$), is better than insertion sort, ($\frac{n^2}{2}$)
 
 **Justification**: Only big problems are interesting!  
@@ -370,5 +369,62 @@ with larger and large input sizes
 Linear time is the the best possible sorting algorithm for any given  
 problem  
 
+## 2.1: Asymptotic Analysis - The Gist
+
+### Motivation
+
+**Importance**: Vocabulary for the design and analysis of algoriths
+(*e.g.*, "Big-O" notation)
+
+- "Sweet spot" for high-level reasoning about algorithms
+- Coarse enough to supress architecture, language, and compiler-dependent
+	details
+- Sharp enough to make usefule comparisons between different algorithms, especially
+	on large inputs, (*e.g.*, sorting or integer multiplication)
+
+### Asymptotic Analysis
+**High-level idea**: Supress constant factors and lower-order terms.
+
+**Example**: Equate $6n\;log_2n + 6n$ with just $n\;logn$  
+**Terminology**: Running time is $O(n\;logn)$ where n is equal to input size
+
+## 2.2: Big-O Notation
+
+### English Definition
+**Question**: Given a function $T(n)$ with $1, 2, 3,..., n$
+operations, when is $T(n) = O(f(n))$?
+
+**Answer**: If eventually, (for all suffiently large $n$), $T(n)$ is
+bounded above by a constant multiple of $f(n)$.
+
+### Formal Definition
+
+$T(n) = O(f(n))$ if and only if $\exists$ constants $c, n_0 > 0$ such that
+$T(n) \leq c f(n) \; \forall n \leq n_0$  
+
+**Note**: $c$ and $n_0$ *cannot* depend on $n$
+
+## 2.3: Basic Examples
+
+### Example #1
+
+**Claim**: If $\;T(n) = a_kn^k + a_{k-1}n^{k-1} \; + \; ... \; + \; a_1n \; + \; a_0$, then
+$T(n) = O(n^k)$  
+
+**Proof**: Suppose $n_0 = 1$ and $c = \lvert a_k \rvert + \lvert a_{k - 1} \rvert \; +  \;... \; + \; \lvert a_1 \rvert + \lvert a_0 \rvert$
 
 
+## 2.4: Big Omega and Theta
+
+### Omega Notation
+
+**Definition**: $T(n) = \Omega(f(n))$ if and only if $\exists$ constants $c$ and
+$n_0$ such that $T(n) \leq c f(n) \; \forall n \leq n_0$  
+
+### Theta Notation
+
+**Definition**: $T(n) = \Theta(f(n))$ if and only if $T(n) = O(f(n))$ and
+$T(n) = \Omega(f(n))$
+
+**Equivalent Formalism**: $\exists$ constants $c_1, c_2, n_0$ such that
+$c_1f(n) \leq T(n) \leq c_2f(n)$
